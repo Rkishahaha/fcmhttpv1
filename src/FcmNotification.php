@@ -13,9 +13,22 @@ class FcmNotification
     protected $title;
     protected $body;
     protected $icon;
+    protected $iconUrl;
     protected $click_action;
     protected $token;
     protected $topic;
+    protected $data = [];
+
+    /** 
+     *Notification custom data.
+     *@param string $title
+     */    
+
+    public function setData($data)
+    {
+        $this->data = $data;
+        return $this;
+    }
 
     /** 
      *Title of the notification.
@@ -77,6 +90,16 @@ class FcmNotification
         return $this;
     }
 
+    /** 
+     *Icon url of the notification.
+     *@param string $icon
+     */
+    public function setIconUrl($iconUrl)
+    {
+        $this->iconUrl = $iconUrl;
+        return $this;
+    }
+
     /**
      * Verify the conformity of the notification. If everything is ok, send the notification.
      */
@@ -134,22 +157,14 @@ class FcmNotification
             $data = [
                 "message" => [
                     "token" => $this->token,
-                    // "notification" => [
-                    //     "title" => $this->title,
-                    //     "body" => $this->body,
-                    // ],
-                    "data" => [
-                        'notifier' => 'okov'
-                    ],
+                    "data" => $this->data,
                     "android" => [
-                        "data" => [
-                            'notifier' => 'okov'
-                        ],
+                        "data" => $this->data,
                         "priority" => 'high',
                         "notification" => [
                             "title" => $this->title,
                             "body" => $this->body,
-                            // "icon" => "https://www.okov.rs/images/favicon.png",
+                            "icon" => $this->iconUrl ?: '',
                             "sound" => "default",
                             "default_sound" => 1,
                             "default_vibrate_timings" => 1,
