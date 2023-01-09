@@ -143,12 +143,29 @@ class FcmNotification
             $data = [
                 "message" => [
                     "topic" => $this->topic,
-                    "webpush" => [
+                    "data" => $this->data,
+                    "android" => [
+                        "data" => $this->data,
+                        "priority" => 'high',
                         "notification" => [
                             "title" => $this->title,
                             "body" => $this->body,
-                            "icon" => $this->icon != null ? asset($this->icon) : '',
-                            "click_action" => $this->click_action ?? ''
+                            "icon" => $this->iconUrl ?: '',
+                            "sound" => "default",
+                            "default_sound" => 1,
+                            "default_vibrate_timings" => 1,
+                            'notification_priority' => "PRIORITY_HIGH"
+                        ]
+                    ],
+                    "apns" => [
+                        "payload" => [
+                            'aps' => [
+                                'alert' => [
+                                    "title" => $this->title,
+                                    "body" => $this->body,
+                                ],
+                                "sound" => "default"
+                            ]
                         ],
                     ]
                 ]
