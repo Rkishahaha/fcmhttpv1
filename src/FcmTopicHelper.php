@@ -29,14 +29,17 @@ class FcmTopicHelper
 
         $url = "https://iid.googleapis.com/iid/v1:batchAdd";
 
+        $oauthToken = FcmGoogleHelper::configureClient();
+
         $headers = [
-            'Authorization' => 'key=' . config('fcm_config.fcm_api_server_key'),
+            'Authorization' => 'Bearer ' . $oauthToken,
             'Content-Type' =>  'application/json',
+            'access_token_auth' => 'true'
         ];
 
         $body = [
             "to" => "/topics/" . $topic,
-            "registration_tokens" => $tokens
+            "registration_tokens" => $tokens,
         ];
 
         $client = new Client();
@@ -68,15 +71,18 @@ class FcmTopicHelper
     {
         $url = "https://iid.googleapis.com/iid/v1:batchRemove";
 
+        $oauthToken = FcmGoogleHelper::configureClient();
+
 
         $headers = [
-            'Authorization' => 'key=' . config('fcm_config.fcm_api_server_key'),
+            'Authorization' => 'Bearer ' . $oauthToken,
             'Content-Type' =>  'application/json',
+            'access_token_auth' => 'true'
         ];
 
         $body = [
             "to" => "/topics/" . $topic,
-            "registration_tokens" => $tokens
+            "registration_tokens" => $tokens,
         ];
 
         $client = new Client();
@@ -108,9 +114,12 @@ class FcmTopicHelper
     {
         $url = "https://iid.googleapis.com/iid/info/" . $token . '?details=true';
 
+        $oauthToken = FcmGoogleHelper::configureClient();
+
         $headers = [
-            'Authorization' => 'key=' . config('fcm_config.fcm_api_server_key'),
+            'Authorization' => 'Bearer ' . $oauthToken,
             'Content-Type' =>  'application/json',
+            'access_token_auth' => 'true'
         ];
 
         $client = new Client();
